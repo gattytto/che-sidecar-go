@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     env:
-      IMAGE_NAME: quay.io/fbenoit/runtime-plugin-go
+      IMAGE_NAME: quay.io/fbenoit/che-sidecar-go
 
     runs-on: ubuntu-latest
 
