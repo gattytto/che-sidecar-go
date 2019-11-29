@@ -12,7 +12,7 @@ name: Build and push container
 on:
   push:
     branches:
-      - '11'
+      - '1.12.9'
 
 jobs:
   build:
