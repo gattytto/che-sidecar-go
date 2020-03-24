@@ -21,13 +21,14 @@ RUN mkdir /projects ${HOME} && \
 
 RUN set -e \
     && \
+    apk add --update --no-cache git \
+    && \
     apk add --update --no-cache  --virtual .build-deps \
         bash \
         gcc g++ \
         musl-dev \
         openssl \
         go \
-        git \
     && \
     export \
         GOROOT_BOOTSTRAP="$(go env GOROOT)" \
@@ -44,7 +45,7 @@ RUN set -e \
     esac \
     && \
     wget -qO- https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz | tar xvz -C /usr/local && \
-    cd /usr/local/go/src &&    ./make.bash && \
+    cd /usr/local/go/src && ./make.bash && \
     rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
     export GOPATH="/go" && \
     mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/pkg" && \
@@ -74,7 +75,7 @@ RUN set -e \
     chmod -R 777 "$GOPATH" && \
     apk del .build-deps && \
     mkdir /.cache && chmod -R 777 /.cache && \
-    wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.22.2
+    cd /usr/local/go && wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.22.2
 
 ENV GOPATH /go
 ENV GOCACHE /.cache
