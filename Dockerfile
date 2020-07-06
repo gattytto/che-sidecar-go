@@ -19,7 +19,7 @@ RUN mkdir /projects ${HOME} && \
       chmod -R g+rwX ${f}; \
     done
 
-RUN set -e \
+RUN set -e -x \
     && \
     apk add --update --no-cache git \
     && \
@@ -49,8 +49,9 @@ RUN set -e \
     rm -rf /usr/local/go/pkg/bootstrap /usr/local/go/pkg/obj && \
     export GOPATH="/go" && \
     mkdir -p "$GOPATH/src" "$GOPATH/bin" "$GOPATH/pkg" && \
-    export PATH="$GOPATH/bin:/usr/local/go/bin:$PATH" && \
-    go get -u -v github.com/ramya-rao-a/go-outline && \
+    export PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
+
+RUN go get -u -v github.com/ramya-rao-a/go-outline && \
     go get -u -v github.com/acroca/go-symbols &&  \
     go get -u -v github.com/stamblerre/gocode &&  \
     go get -u -v github.com/rogpeppe/godef && \
@@ -72,7 +73,7 @@ RUN set -e \
     go get -u -v golang.org/x/tools/cmd/gotype && \
     GO111MODULE=on go get -v golang.org/x/tools/gopls@latest && \
     go build -o /go/bin/gocode-gomod github.com/stamblerre/gocode && \
-    chmod -R 777 "$GOPATH" && \
+    chmod -R 777 /go && \
     apk del .build-deps && \
     mkdir /.cache && chmod -R 777 /.cache && \
     cd /usr/local/go && wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.22.2
