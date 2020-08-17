@@ -8,7 +8,7 @@
 # Contributors:
 #   Red Hat, Inc. - initial API and implementation
 
-FROM golang:1.14.4-stretch
+FROM golang:1.14.7-stretch
 
 ENV HOME=/home/theia
 
