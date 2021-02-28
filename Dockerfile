@@ -39,9 +39,8 @@ RUN set -e -x && \
     go get -u -v github.com/uudashr/gopkgs/v2/cmd/gopkgs && \
     go get -u -v golang.org/x/tools/cmd/gotype && \
     go get -u -v github.com/mdempsky/gocode && \
-    go get -u -v github.com/stamblerre/gocode && \
     GO111MODULE=on go get -v golang.org/x/tools/gopls@master golang.org/x/tools@master && \
-    go build -o /go/bin/gocode-gomod github.com/stamblerre/gocode && \
+    go get -u -v github.com/stamblerre/gocode && go build -o /go/bin/gocode-gomod github.com/stamblerre/gocode && \
     chmod -R 777 /go && \
     mkdir -p /.cache && chmod -R 777 /.cache && \
     mkdir -p /usr/local/go && chmod -R 777 /usr/local/go && \
