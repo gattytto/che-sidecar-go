@@ -11,6 +11,10 @@
 FROM golang:1.16.0-buster
 
 ENV HOME=/home/theia
+ENV GOPATH /go
+ENV GOCACHE /.cache
+ENV GOROOT /usr/local/go
+ENV GO111MODULE on
 
 RUN mkdir /projects ${HOME} && \
     # Change permissions to let any arbitrary user
@@ -39,16 +43,12 @@ RUN set -e -x && \
     go get -u -v github.com/uudashr/gopkgs/v2/cmd/gopkgs && \
     go get -u -v golang.org/x/tools/cmd/gotype && \
     go get -u -v github.com/mdempsky/gocode && \
+    go get -u -v github.com/stamblerre/gocode && \
     GO111MODULE=on go get -v golang.org/x/tools/gopls@master golang.org/x/tools@master && \
     chmod -R 777 /go && \
     mkdir -p /.cache && chmod -R 777 /.cache && \
     mkdir -p /usr/local/go && chmod -R 777 /usr/local/go && \
     cd /usr/local/go && wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.37.1
-
-ENV GOPATH /go
-ENV GOCACHE /.cache
-ENV GOROOT /usr/local/go
-ENV GO111MODULE on
 
 ADD etc/entrypoint.sh /entrypoint.sh
 
